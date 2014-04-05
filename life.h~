@@ -1,0 +1,22 @@
+#ifndef Xdim
+#define Xdim
+
+int **tab;
+
+int **tmp;
+
+int *Xdim1;
+
+int *Ydim1;
+
+int** createLife( int m, int n);
+
+void setAlive(int **tab, int x, int y);
+
+void copyLife(int **tab, int **tmp);
+
+int checkNeighbour(int **tab, int x, int y, int xdim, int ydim);
+
+void newGeneration(int **tab, int **tmp, int xdim, int ydim);
+
+#endif
