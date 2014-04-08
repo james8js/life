@@ -3,17 +3,15 @@
 #include <time.h>
 #include <ctype.h>
 
-#ifdef _WIN32
-#include <windows.h>
-#include <conio.h>
-#include <process.h>
-#include <dir.h>
-#endif
-
 #ifdef linux
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+	#include <sys/types.h>
+	#include <sys/stat.h>
+	#include <unistd.h>
+#elif defined _WIN32 || defined _WIN64
+	#include "wingetopt.h"
+	#include <windows.h>
+	#include <conio.h>
+	#include <process.h>
 #endif
 
 #include "functions.h"

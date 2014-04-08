@@ -3,18 +3,15 @@
 #include <time.h>
 #include <ctype.h>
 
-#ifdef _WIN32
-#include "wingetopt.h"
-#include <windows.h>
-#include <conio.h>
-#include <process.h>
-#include <dir.h>
-#endif
-
 #ifdef linux
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+	#include <sys/types.h>
+	#include <sys/stat.h>
+	#include <unistd.h>
+#elif defined _WIN32 || defined _WIN64
+	#include "wingetopt.h"
+	#include <windows.h>
+	#include <conio.h>
+	#include <process.h>
 #endif
 
 #include "life.h"
@@ -26,7 +23,9 @@
 int main(int argc, char **argv)
 {
 	int **life_tab, **life_tmp, x, y;
-	opterr = 0;
+	#ifdef linux
+		opterr = 0;
+	#endif
 	setColor();
 	struct options opt = {-1,-1,-1,0,NULL};
 	opt = getOptions(opt, argc, argv);
