@@ -22,6 +22,7 @@ struct options{
 	int topt;
 	int Nopt;
 	int s;
+	int o;
 	char *fopt;
 };
 

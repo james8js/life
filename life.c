@@ -50,40 +50,56 @@ int** copyLife(int **tab, int x, int y)
 	return tmp;
 }
 
-int checkNeighbour(int **tab_n, int x, int y, int xdim, int ydim)
+int checkNeighbour(int **tab_n, int x, int y, int xdim, int ydim, int bool)
 {
 	int i, j;
+	if(bool!=0)
+		bool=1;
 	int neighbour=0;
-	for(j=y-1; j<=y+1; j++)
+	if(bool==0)
 	{
-		if(j<0 || j>=ydim)
+		for(j=y-1; j<=y+1; j++)
 		{
-			continue;
-		}
-		for(i=x-1; i<=x+1; i++)
-		{
-			if(i<0 || i>=xdim || (i==x && j==y))
+			if(j<0 || j>=ydim)
 			{
 				continue;
 			}
-			if(tab_n[j][i]==1)
+			for(i=x-1; i<=x+1; i++)
 			{
-				neighbour++;
+				if(i<0 || i>=xdim || (i==x && j==y))
+				{
+					continue;
+				}
+				if(tab_n[j][i]==1)
+				{
+					neighbour++;
+				}
 			}
 		}
 	}
-	if(tab_n[y][x]==1 && (neighbour==2 || neighbour==3) )
+	else
+	{
+		if( x-1>=0 && x-1<xdim && y>=0 && y<ydim )
+			neighbour+=tab_n[y][x-1];
+		if( x+1>=0 && x+1<xdim && y>=0 && y<ydim )
+			neighbour+=tab_n[y][x+1];
+		if( x>=0 && x<xdim && y-1>=0 && y-1<ydim )
+			neighbour+=tab_n[y-1][x];
+		if( x>=0 && x<xdim && y+1>=0 && y+1<ydim )
+			neighbour+=tab_n[y+1][x];
+	}
+	if(tab_n[y][x]==1 && (neighbour==(2-bool) || neighbour==(3-bool)) )
 	{
 		return 1;
 	}
-	if(tab_n[y][x]==0 &&  neighbour==3 )
+	if(tab_n[y][x]==0 &&  neighbour==(3-bool) )
 	{
 		return 1;
 	}
 	return 0;
 }
 
-void newGeneration(int **tab, int **tmp, int xdim, int ydim)
+void newGeneration(int **tab, int **tmp, int xdim, int ydim, int boolo)
 {
 	tmp=copyLife(tab, xdim, ydim);
 	int i,j;
@@ -91,7 +107,7 @@ void newGeneration(int **tab, int **tmp, int xdim, int ydim)
 	{
 		for(i=0; i<xdim; i++)
 		{
-			tab[j][i] = checkNeighbour(tmp, i, j, xdim, ydim);
+			tab[j][i] = checkNeighbour(tmp, i, j, xdim, ydim, boolo);
 		}
 	}
 }
@@ -130,7 +146,7 @@ struct life makeLife() //MakeLove!
 	return randomlife;
 }
 
-void simulateLife(int **life_tab, int **life_tmp, int x, int y, int nopt, int Nopt, int topt, int s)
+void simulateLife(int **life_tab, int **life_tmp, int x, int y, int nopt, int Nopt, int topt, int s, int o)
 {
 	int t = time(NULL), i;
     char *dir = fileName();
@@ -152,7 +168,7 @@ void simulateLife(int **life_tab, int **life_tmp, int x, int y, int nopt, int No
 			showLife(life_tab, x, y);
 		if(Nopt!=0 && i%Nopt==0)
 			savePNG(name, life_tab, x, y);
-		newGeneration(life_tab, life_tmp, x, y);
+		newGeneration(life_tab, life_tmp, x, y, o);
 		t++;
 		if(topt!=0)
 			sleep(topt);

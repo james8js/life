@@ -51,7 +51,7 @@ int isNumeric (const char * s)
 struct options getOptions(struct options opt, int argc, char **argv)
 {
 	int c;
-	while ((c = getopt (argc, argv, "f:n:t:N:s")) != -1)
+	while ((c = getopt (argc, argv, "f:n:t:N:so")) != -1)
 		switch (c)
 		{
 			case 'f':
@@ -84,6 +84,9 @@ struct options getOptions(struct options opt, int argc, char **argv)
 			break;
 			case 's':
 				opt.s = 1;
+			break;
+			case 'o':
+				opt.o = 1;
 			break;
 			default:
 				abort ();

@@ -12,13 +12,13 @@ void setAlive(int **tab, int x, int y);
 
 int** copyLife(int **tab, int x, int y);
 
-int checkNeighbour(int **tab_n, int x, int y, int xdim, int ydim);
+int checkNeighbour(int **tab_n, int x, int y, int xdim, int ydim, int bool);
 
-void newGeneration(int **tab, int **tmp, int xdim, int ydim);
+void newGeneration(int **tab, int **tmp, int xdim, int ydim, int boolo);
 
 void showLife(int** tab, int xdim, int ydim);
 
-void simulateLife(int **life_tab, int **life_tmp, int x, int y, int nopt, int Nopt, int topt, int s);
+void simulateLife(int **life_tab, int **life_tmp, int x, int y, int nopt, int Nopt, int topt, int s, int o);
 
 struct life
 {
